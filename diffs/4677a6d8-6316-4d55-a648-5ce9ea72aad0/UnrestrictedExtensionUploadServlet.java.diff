@@ -83,6 +83,11 @@
                  doGet(req, res);
                  return;
              }
+@@ -81,0 +82,4 @@
++              String normalizedPath = new File(savePath + File.separator + fileName).getCanonicalPath();
++              if (!normalizedPath.startsWith(new File(savePath).getCanonicalPath())) {
++                  throw new IOException("Invalid file path");
++              }
              boolean isConverted = MultiPartFileUtils.writeFile(filePart, savePath, fileName);
  
              if (!isConverted) {
@@ -137,11 +142,6 @@
                  }
              }
              // Output the image
-@@ -135,0 +136,4 @@
-+              String normalizedPath = new File(fileName).getCanonicalPath();
-+              if (!normalizedPath.startsWith(new File(savePath).getCanonicalPath())) {
-+                  throw new IOException("Invalid file path");
-+              }
              ImageIO.write(image, "png", new File(fileName));
              isConverted = true;
          } catch (Exception e) {
