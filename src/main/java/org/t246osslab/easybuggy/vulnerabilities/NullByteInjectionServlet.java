@@ -44,6 +44,16 @@ public class NullByteInjectionServlet extends AbstractServlet {
             String appPath = getServletContext().getRealPath("");
 
             File file = new File(appPath + File.separator + "pdf" + File.separator + fileName);
+              try {
+                  String normalizedPath = file.getCanonicalPath();
+                  if (!normalizedPath.startsWith(new File(appPath).getCanonicalPath())) {
+                      responseToClient(req, res, getMsg("title.nullbyteinjection.page", locale), bodyHtml.toString());
+                      return;
+                  }
+              } catch (IOException e) {
+                  responseToClient(req, res, getMsg("title.nullbyteinjection.page", locale), bodyHtml.toString());
+                  return;
+              }
             if (!file.exists()) {
                 responseToClient(req, res, getMsg("title.nullbyteinjection.page", locale), bodyHtml.toString());
                 return;
