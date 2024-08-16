@@ -53,6 +53,7 @@ public class SQLInjectionServlet extends AbstractServlet {
 
         } catch (Exception e) {
             log.error("Exception occurs: ", e);
+            log.error("Exception occurs: ", e);
         }
     }
 
